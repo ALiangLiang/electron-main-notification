@@ -12,7 +12,10 @@ const { ipcRenderer } = require('electron')
 ipcRenderer.on('display-notification', (event, arg) => {
   var notification = new Notification (arg.title, arg.opts)
   notification.onclick = () => {
-    ipcRenderer.send('display-notification-onclick', arg.uid)
+    ipcRenderer.send('display-notification-onclick', arg.uidClick)
+  }  
+  notification.onclose = () => {
+    ipcRenderer.send('display-notification-onclick', arg.uidClose)
   }
 })
 </script>
