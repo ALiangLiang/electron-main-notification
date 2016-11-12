@@ -29,8 +29,5 @@
   "homepage": "https://github.com/MaxGfeller/electron-main-notification#readme",
   "devDependencies": {
     "standard": "^8.0.0"
-  },
-  "dependencies": {
-    "uuid": "^2.0.2"
   }
 }

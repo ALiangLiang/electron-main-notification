@@ -1,11 +1,13 @@
-const { ipcMain, BrowserWindow } = require('electron')
-const uuid = require('uuid')
+const {
+  ipcMain,
+  BrowserWindow
+} = require('electron')
 const path = require('path')
 
 var window = null
 var callbacks = {}
 
-module.exports = function (title, opts, onClick, onClose) {
+module.exports = function(title, opts, onClick, onClose) {
   if (window) return sendNotification(title, opts, onClick, onClose)
 
   window = new BrowserWindow({
@@ -22,9 +24,18 @@ module.exports = function (title, opts, onClick, onClose) {
   })
 }
 
-function sendNotification (title, opts, onClick, onClose) {
-  var uidClick = uuid.v1()
-  var uidClose = uuid.v1()
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const
+      r = Math.random() * 16 | 0,
+      v = c == 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
+
+function sendNotification(title, opts, onClick, onClose) {
+  var uidClick = uuid()
+  var uidClose = uuid()
   if (onClick) callbacks[uidClick] = onClick
   if (onClose) callbacks[uidClose] = onClose
   window.webContents.send('display-notification', {
